@@ -1,0 +1,138 @@
+
+Real-Time Crypto Prices ETL Pipeline
+
+## Project Overview
+This project demonstrates a **real-time ETL (Extract, Transform, Load) pipeline** for cryptocurrency prices. The goal is to fetch live data from the CoinGecko API, process it, store it in a database, perform aggregations, and visualize trends.  
+
+This project highlights **data engineering skills**, including API ingestion, data transformation, SQL aggregation, automation, and basic analytics.
+
+---
+
+## Dataset / Data Source
+- **Source:** CoinGecko Public API (no API key required)  
+- **Data:** Live cryptocurrency prices (Bitcoin, Ethereum)  
+- **Columns after ETL:**  
+  - `coin` — cryptocurrency name  
+  - `price_usd` — current price in USD  
+  - `timestamp` — UTC time of data ingestion  
+- **Aggregated CSV:** `daily_avg_prices.csv` with `coin`, `date`, `avg_price`
+
+---
+
+## Tools & Technologies
+- **Python** — scripting & data processing  
+- **Pandas** — data transformation & CSV handling  
+- **SQLite** — lightweight data warehouse  
+- **Matplotlib** — visualization  
+- **Requests** — API fetching  
+- **Subprocess / Automation** — scheduled pipeline execution
+
+---
+
+## Project Steps
+
+### 1. Data Ingestion
+- Fetch live crypto prices from the CoinGecko API using Python and Requests.  
+- Transform JSON response into a structured Pandas DataFrame.
+
+### 2. ETL Processing
+- Add timestamps to each fetch.  
+- Append data to `crypto_prices.csv` for historical tracking.  
+- Load CSV into SQLite database for structured storage.
+
+### 3. SQL Aggregation
+- Compute **daily average price per coin** using SQL queries.  
+- Store results in `daily_avg_prices.csv`.
+
+### 4. Pipeline Automation
+- Create `run_all.py` orchestrator to run fetch + aggregation scripts sequentially.  
+- Enable scheduled execution via Task Scheduler (Windows) or cron (Linux).
+
+### 5. Visualization
+- Pivot aggregated data for coins as columns.  
+- Plot daily average prices using Matplotlib to show trends over time.
+
+---
+
+## Project Structure
+
+```
+
+crypto-etl-pipeline/
+├── data/
+│   ├── crypto_prices.csv
+│   └── daily_avg_prices.csv
+├── etl/
+│   ├── 01_fetch_prices.py
+│   ├── 02_load_to_sqlite.py
+│   ├── 04_daily_aggregation.py
+│   ├── 05_plot_trends.py
+│   └── run_all.py
+├── crypto_data.db
+└── README.md
+
+````
+
+---
+
+## How to Run
+1. Clone this repository:
+```bash
+git clone <your-repo-url>
+cd crypto-etl-pipeline
+````
+
+2. Install dependencies:
+
+```bash
+pip install pandas matplotlib requests
+```
+
+3. Run the pipeline manually:
+
+```bash
+python etl/run_all.py
+```
+
+4. Optional: Schedule pipeline for automated execution (Windows Task Scheduler / Linux cron).
+
+---
+
+## Sample Output
+
+**Daily Aggregated CSV:**
+
+```
+coin,date,avg_price
+bitcoin,2026-01-01,43250.0
+ethereum,2026-01-01,2290.0
+```
+
+**Trend Visualization:**
+
+* Line chart showing daily average prices of Bitcoin and Ethereum over time.
+
+---
+
+## Resume-Ready Highlights
+
+* Built an **automated real-time ETL pipeline** for cryptocurrency prices using Python and SQLite.
+* Implemented **JSON → DataFrame → CSV → SQLite** workflow to maintain historical time-series data.
+* Designed **SQL aggregation layer** for daily average price analysis.
+* Scheduled pipeline for **continuous execution**, enabling production-style data ingestion.
+* Visualized trends using Matplotlib for quick analytical insights.
+
+---
+
+## Future Enhancements
+
+* Extend to **more cryptocurrencies** (top 10/50)
+* Store data in **cloud warehouse** (BigQuery / AWS Redshift)
+* Build a **real-time dashboard** (Streamlit / Dash)
+* Add **alert system** for price thresholds
+
+---
+
+## Author
+
+Aman Shaikh 
